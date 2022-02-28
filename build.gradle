@@ -1,0 +1,30 @@
+plugins {
+    id 'application'
+}
+
+mainClassName = 'de.matthesvoss.security.ChromiumPasswordRecovery'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform
+    implementation 'net.java.dev.jna:jna-platform:5.10.0'
+    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation 'org.json:json:20211205'
+}
+
+task fatJar(type: Jar) {
+    archiveClassifier.set('all')
+    manifest {
+        attributes 'Main-Class': '$mainClassName'
+    }
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
