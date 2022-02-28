@@ -20,7 +20,7 @@ dependencies {
 task fatJar(type: Jar) {
     archiveClassifier.set('all')
     manifest {
-        attributes 'Main-Class': '$mainClassName'
+        attributes "Main-Class": "$mainClassName"
     }
     duplicatesStrategy DuplicatesStrategy.EXCLUDE
     from {
